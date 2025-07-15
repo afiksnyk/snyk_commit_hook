@@ -1,0 +1,23 @@
+# .pre-commit-config.yaml
+# Configuration with OPA and Simple scripts for hardcoded secrets detection
+
+repos:
+  - repo: local
+    hooks:
+      # OPA-based secrets detection (advanced policy-based approach)
+      - id: snyk-secrets-opa
+        name: Detect Hardcoded Secrets (OPA)
+        entry: bash scripts/snyk-secrets-opa-check.sh
+        language: system
+        pass_filenames: false
+        stages: [pre-commit]
+        files: \.(js|ts|py|java|rb|go|php|cs|cpp|c|h|jsx|tsx|json|yaml|yml|xml|properties|env|config)$
+        
+      # Simple text-based secrets detection (lightweight approach)
+      - id: snyk-secrets-simple
+        name: Detect Hardcoded Secrets (Simple)
+        entry: bash scripts/snyk-secrets-simple.sh
+        language: system
+        pass_filenames: false
+        stages: [pre-commit]
+        files: \.(js|ts|py|java|rb|go|php|cs|cpp|c|h|jsx|tsx|json|yaml|yml|xml|properties|env|config)$
